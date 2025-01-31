@@ -136,14 +136,14 @@ class HomeScreen extends StatelessWidget {
 
 class CategoryGrid extends StatelessWidget {
   final List<Map<String, dynamic>> categories = [
-    {"icon": Icons.near_me, "label": "Near Me"},
-    {"icon": Icons.local_offer, "label": "Big Promo"},
-    {"icon": Icons.star, "label": "Best Seller"},
-    {"icon": Icons.attach_money, "label": "Budget Meal"},
-    {"icon": Icons.health_and_safety, "label": "Healthy Food"},
-    {"icon": Icons.access_time, "label": "Open 24 Hours"},
-    {"icon": Icons.restaurant, "label": "Popular Restaurant"},
-    {"icon": Icons.more_horiz, "label": "More"},
+    {"icon": Icons.near_me, "label": "Near Me", "images": "images/near_me.jpeg"},
+    {"icon": Icons.local_offer, "label": "Big Promo", "images": "images/promo.jpg"},
+    {"icon": Icons.star, "label": "Best Seller", "images": "images/best_seller.png"},
+    {"icon": Icons.attach_money, "label": "Budget Meal", "images": "images/budget_meal.jpeg"},
+    {"icon": Icons.health_and_safety, "label": "Healthy Food", "images": "images/healthy_food.png"},
+    {"icon": Icons.access_time, "label": "Open 24 Hours", "images": "images/open.png"},
+    {"icon": Icons.restaurant, "label": "Popular Restaurant", "images": "images/popular.jpg"},
+    {"icon": Icons.more_horiz, "label": "More", "images": "images/more.png"},
   ];
 
   @override
@@ -163,7 +163,17 @@ class CategoryGrid extends StatelessWidget {
             children: [
               CircleAvatar(
                 backgroundColor: Colors.red.shade100,
-                child: Icon(categories[index]['icon'], color: Colors.red),
+                radius: 30, // Adjust for better fit
+                child: categories[index]['images'] != null
+                    ? ClipOval(
+                  child: Image.asset(
+                    categories[index]['images'],
+                    width: 60, // Adjust for perfect fitting
+                    height: 60,
+                    fit: BoxFit.cover, // Ensures the image fits properly
+                  ),
+                )
+                    : Icon(categories[index]['icon'], color: Colors.red, size: 30),
               ),
               SizedBox(height: 5),
               Text(categories[index]['label'], style: TextStyle(fontSize: 12)),
@@ -175,8 +185,15 @@ class CategoryGrid extends StatelessWidget {
   }
 }
 
+
 class CuisineSection extends StatelessWidget {
-  final List<String> cuisines = ["Chicken", "Burger", "Pizza", "Bakery", "Salad"];
+  final List<Map<String, String>> cuisines = [
+    {"label": "Chicken", "image": "images/chicken.png"},
+    {"label": "Burger", "image": "images/burger.png"},
+    {"label": "Pizza", "image": "images/pizza.png"},
+    {"label": "Bakery", "image": "images/bakery.png"},
+    {"label": "Salad", "image": "images/salad.png"},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -189,13 +206,42 @@ class CuisineSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Cuisines", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text("View All", style: TextStyle(color: Colors.red)),
+              Text("View All", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
             ],
           ),
           SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: cuisines.map((cuisine) => Chip(label: Text(cuisine))).toList(),
+          SizedBox(
+            height: 80, // Ensures a scrollable horizontal list
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: cuisines.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.red.shade100,
+                        radius: 25,
+                        child: ClipOval(
+                          child: Image.asset(
+                            cuisines[index]['image']!,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        cuisines[index]['label']!,
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
