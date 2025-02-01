@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practiceapp/pages/NearMeScreen.dart';
 
 void main() {
   runApp(FoodDeliveryApp());
@@ -159,25 +160,50 @@ class CategoryGrid extends StatelessWidget {
         ),
         itemCount: categories.length,
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.red.shade100,
-                radius: 30, // Adjust for better fit
-                child: categories[index]['images'] != null
-                    ? ClipOval(
-                  child: Image.asset(
-                    categories[index]['images'],
-                    width: 60, // Adjust for perfect fitting
-                    height: 60,
-                    fit: BoxFit.cover, // Ensures the image fits properly
-                  ),
-                )
-                    : Icon(categories[index]['icon'], color: Colors.red, size: 30),
-              ),
-              SizedBox(height: 5),
-              Text(categories[index]['label'], style: TextStyle(fontSize: 12)),
-            ],
+          return GestureDetector(
+            // onTap: () {
+              // if (categories[index]['label'] == "Near Me") {
+                // Navigator.push(
+                  // context,
+                  // MaterialPageRoute(builder: (context) => NearMeScreen()),
+                // );
+              // }
+            // },
+
+
+            child: Column(
+
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.red.shade100,
+                  radius: 30,
+                  child: categories[index]['images'] != null
+                      ? ClipOval(
+                    child: Image.asset(
+                      categories[index]['images'],
+                      width: 60,
+                      height: 60,
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                      : Icon(categories[index]['icon'], color: Colors.red, size: 30),
+                ),
+                SizedBox(height: 5),
+                Text(categories[index]['label'], style: TextStyle(fontSize: 12)),
+    if (categories[index]['label'] == "Near Me")
+                GestureDetector(
+                  onTap: () {
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => NearMeScreen()),
+                      );
+
+                  },
+                  child: Icon(Icons.arrow_forward, color: Colors.red, size: 20),
+                ),
+              ],
+            ),
           );
         },
       ),
@@ -236,6 +262,7 @@ class CuisineSection extends StatelessWidget {
                       Text(
                         cuisines[index]['label']!,
                         style: TextStyle(fontSize: 12),
+
                       ),
                     ],
                   ),
